@@ -1,19 +1,63 @@
 ---
-slug: '/'
-sidebar_label: 'SAP Data Services Connector'
+slug: "/"
+hide_table_of_contents: true
 ---
 
-# SAP Data Services
+# SAP Data Services Connector
 
-SAP Data Services provides a batch and real-time data integration system to drive today's new generation of analytic and supply-chain management applications. Using the highly scalable data integration solution provided by SAP, the enterprise can maintain a real-time, on-line dialogue with customers, suppliers, employees, and partners, providing the critical information needed for transactions and business analysis.
+The SMA OpCon SAP Data Services Connector starts and tracks jobs defined within the SAP Data Services Repository and Job Servers by communicating with the Central Management Console (CMC) through web services.
 
-SAP Data Services combines both batch and real-time data movement and management to provide a single data integration platform for information management from any information source, for any information use.
+<div style={{display: 'flex', gap: '0.75rem', alignItems: 'flex-start', flexWrap: 'wrap', marginTop: '1rem'}}>
 
-Using the software, you can:
-* Stage data in an operational data store, data warehouse, or data mart.
-* Update staged data in batch or real-time modes.
-* Create a single graphical development environment for developing, testing, and deploying the entire data integration platform.
-* Manage a single metadata repository to capture the relationships between different extraction and access methods and provide integrated lineage and impact analysis.
+<div style={{flex: '1', minWidth: '160px', display: 'flex', flexDirection: 'column', gap: '0.6rem'}}>
 
-The SMA OpCon SAP Data Services Connector interacts with the Central Management Console (CMC) through web services to start and track (monitor) jobs defined within the Repository and running on Job Servers within the SAP Data Services environment.
+<div style={{background: 'var(--ifm-card-background-color)', border: '1px solid var(--ifm-color-emphasis-400)', borderRadius: '10px', padding: '0.75rem 1rem'}}>
 
+### Overview
+
+- [Overview](./overview.md)
+- [Release Notes](./release-notes.md)
+
+</div>
+
+<div style={{background: 'var(--ifm-card-background-color)', border: '1px solid var(--ifm-color-emphasis-400)', borderRadius: '10px', padding: '0.75rem 1rem'}}>
+
+### Configuration
+
+- [Connector Configuration](./configuration.md)
+
+</div>
+
+</div>
+
+<div style={{flex: '1', minWidth: '160px', display: 'flex', flexDirection: 'column', gap: '0.6rem'}}>
+
+<div style={{background: 'var(--ifm-card-background-color)', border: '1px solid var(--ifm-color-emphasis-400)', borderRadius: '10px', padding: '0.75rem 1rem'}}>
+
+### Installation
+
+- [Installation Overview](./installation/overview.md)
+- [Installation](./installation/installation.md)
+- [Global Property Set-up](./installation/sap-gp-configuration.md)
+- [Enterprise Manager Subtype Set-up](./installation/em-sapds-subtype.md)
+- [Solution Manager Subtype Set-up](./installation/sm-sapds-subtype.md)
+
+</div>
+
+</div>
+
+<div style={{flex: '1', minWidth: '160px', display: 'flex', flexDirection: 'column', gap: '0.6rem'}}>
+
+<div style={{background: 'var(--ifm-card-background-color)', border: '1px solid var(--ifm-color-emphasis-400)', borderRadius: '10px', padding: '0.75rem 1rem'}}>
+
+### Reference Information
+
+- [Defining a Job in Enterprise Manager](./reference_information/em-defining-a-job.md)
+- [Defining a Job in Solution Manager](./reference_information/sm-defining-a-job.md)
+- [Logging and Job Output](./reference_information/logging-job-output.md)
+
+</div>
+
+</div>
+
+</div>

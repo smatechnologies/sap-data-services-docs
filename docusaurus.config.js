@@ -5,10 +5,14 @@ module.exports = {
   url: 'https://help.smatechnologies.com',
   baseUrl: '/opcon/connectors/sap-data-services/',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'smatechnologies',
   projectName: 'sap-data-services-docs',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
   themeConfig: {
     navbar: {
       title: 'Help',
@@ -28,7 +32,7 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          breadcrumbs: false,
+          breadcrumbs: true,
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
@@ -46,9 +50,11 @@ module.exports = {
   ],
   plugins: [
     [
-      require.resolve('@cmfcmf/docusaurus-search-local'), 
+      require.resolve('@easyops-cn/docusaurus-search-local'),
       {
-      }
+        hashed: true,
+        indexBlog: false,
+      },
     ],
   ],
 };

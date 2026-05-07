@@ -1,14 +1,52 @@
 ---
 sidebar_label: 'Logging and Job Output'
+title: SAP Data Services Connector logging and job output
+description: "Where the SAP Data Services Connector writes log files and how OpCon job output captures the SAP Data Services Trace Log."
+tags:
+  - Reference
+  - System Administrator
+  - Connectors
 ---
 
-# Logging and Job Output
+# Logging and job output
 
-The default logging implemented by the connector consists of a maximum cycle of five log files. The log files contain information about the SAP BODS Connector and any jobs run by the SAP Data Services Connector. The log files, called ```Agent.log - Agent.log.5```, are located in the ```<media>\log``` directory. Information is appended into the log files and any error messages, return codes can be viewed in these log files.
+## What is it?
 
-All information produced by the OpCon job is available in the job output and can be retrieved using the OpCon JORS capability. The returned job output includes the information from the SAP Data Services Trace Log (see section indented section of the example below). 
+The SAP Data Services Connector writes its own log files locally on the host. Job output retrieved through OpCon (using JORS) includes the same connector entries plus the SAP Data Services Trace Log returned by SAP Data Services.
 
-## Log Example
+This page describes where to look for each, what they contain, and how to read the entries.
+
+## At a glance
+
+| Item | Where it lives | Notes |
+|---|---|---|
+| Connector log files | `<media>\log` directory on the connector host | `<media>` is the connector installation directory. |
+| Log file naming | `Agent.log` through `Agent.log.5` | Default cycle is a maximum of five rotated files. New entries are appended. |
+| OpCon job output | Retrieved via OpCon's JORS capability | Includes the same connector entries plus the embedded SAP Data Services Trace Log. |
+| SAP Data Services Trace Log | Embedded inside the connector job output | Shown indented in the example below. |
+
+## How to read a connector log entry
+
+Each connector log entry has this shape:
+
+```
+<timestamp> [<thread>] INFO  AgentLog - [<component>] DEBUG : <message>
+```
+
+Common components you will see:
+
+| Component | What it logs |
+|---|---|
+| `BODSConnector` | Connector startup, configuration values, and final return code. |
+| `BODSConnectionFactory` | Logon, logout, RunBatchJob, getBatchJob, and getJobTraceLog web service calls, including the WSDL location and endpoint address. |
+| `BODSJobExecutorImpl` | The high-level connector flow for the requested function (START, TRACK, CANCEL, PING), including extracted parameters and the embedded SAP Data Services Trace Log. |
+
+The SAP Data Services Trace Log itself appears indented under the `JOB TRACE LOG` banner inside the `BODSJobExecutorImpl` output.
+
+## Log example
+
+The following is a complete `Agent.log` entry for a successful `START` of a job named `HelloWorld`. The indented block under `JOB TRACE LOG` is the SAP Data Services Trace Log.
+
 ```
 2014-12-09 09:46:28,404 [main] INFO  AgentLog - [BODSJobExecutorImpl] -----------------------------------------------------------
 2014-12-09 09:46:28,404 [main] INFO  AgentLog - [BODSJobExecutorImpl] DEBUG : Performing Logout
@@ -71,3 +109,30 @@ All information produced by the OpCon job is available in the job output and can
 2014-12-09 09:47:11,091 [main] INFO  AgentLog - [BODSConnectionFactory] DEBUG : logout return Status {Logout complete}
 2014-12-09 09:47:11,091 [main] INFO  AgentLog - [BODSConnector] Operation return code : JOB_FINNISHED_OK
 ```
+
+## FAQs
+
+**Where are the connector log files stored?**
+In the `<media>\log` directory, where `<media>` is the connector installation directory.
+
+**How many log files does the connector keep?**
+The default cycle is a maximum of five log files: `Agent.log` through `Agent.log.5`. New entries are appended.
+
+**How do I retrieve job output for a SAP Data Services job?**
+Use OpCon's JORS capability. The job output includes the SAP Data Services Trace Log content embedded in the connector log entries.
+
+**Where is the SAP Data Services Trace Log in the output?**
+Indented under the `JOB TRACE LOG` banner inside the `BODSJobExecutorImpl` output.
+
+**How do I increase the amount of detail in the connector log?**
+Set `DEBUG=ON` in `Connector.config`. See [SAP Data Services Connector configuration](../configuration.md). Set it back to `OFF` once the issue is captured.
+
+## Glossary
+
+**JORS** — Job Output Retrieval Service. The OpCon component that retrieves job output from agents back to the OpCon server.
+
+**Trace Log** — The execution log produced by SAP Data Services for each job run. The connector includes the Trace Log content in the OpCon job output.
+
+**Agent.log** — The connector's log file. Up to five rotated files (`Agent.log` through `Agent.log.5`) are kept in `<media>\log`.
+
+**`<media>`** — The connector installation directory (for example, `C:\Program Files\OpConxps\SAPDataServices`). Used in log path references on this page.
