@@ -12,6 +12,14 @@ tags:
 
 ## 21
 
+### 24.3.0
+
+2026 May
+
+### What's new
+
+:eight_spoked_asterisk: **CON-1330***: Removed vulnerability CVE-2022-41404 by replacing ini4j library with Apache-commons-configuration library.
+
 ### 21.00.0000
 
 2021 December
