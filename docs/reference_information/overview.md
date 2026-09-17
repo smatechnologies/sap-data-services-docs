@@ -26,7 +26,7 @@ The reference information section describes the SAP Data Services Connector's jo
 Open the page for the UI you are using: Enterprise Manager or Solution Manager. Each page lists the job-type fields and their meaning.
 
 **Where are the connector log files documented?**
-See [Logging and job output](./logging-job-output.md). The page describes the log file location, rotation count, and a sample log entry that includes the SAP Data Services Trace Log.
+See [Logging and job output](./logging-job-output.md). The page describes the log file location and naming, how completed files are rolled, and a sample log entry that includes the SAP Data Services Trace Log.
 
 ## Glossary
 

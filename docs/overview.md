@@ -27,7 +27,7 @@ The SMA OpCon SAP Data Services Connector interacts with the Central Management 
 
 ## SAP Data Services Connector
 
-The SAP Data Services Connector is a Windows-based component that lets OpCon start, cancel, and track jobs running in the SAP Data Services environment. The current connector implementation consists of a Windows batch program that is run by the Windows Agent. Job definitions are entered as Windows jobs using the SAP Data Services job subtype. When the job is scheduled by OpCon, the definitions are passed as arguments to the SAP Data Services Connector.
+The SAP Data Services Connector lets OpCon start, cancel, and track jobs running in the SAP Data Services environment. It is a Java program that the Windows Agent runs, using the Java runtime supplied in the connector package. Job definitions are entered as Windows jobs using the SAP Data Services job subtype. When the job is scheduled by OpCon, the definitions are passed as arguments to the SAP Data Services Connector.
 
 ![SAP DataServices Connector Overview](../static/img/SAPDS_connector_overview.jpg)
 
@@ -46,7 +46,9 @@ The SAP Data Services Connector supports the following job types, which can be u
 
 The job definitions are passed to the SAP Data Services Connector as arguments. The connector uses the `BODS_WSDL.wsdl` definition to define the web services endpoints. The job definition information received from OpCon is then mapped to the appropriate structures and the web service is called.
 
-Each job type apart from PING requires a valid user and password, which the connector uses to establish the connection to SAP Data Services. Once the connection is established, a security token is returned and used on all subsequent calls to the web service until the job has completed. The security token is then discarded.
+Every job type requires the user name, password, CMS system and CMS authentication values to be supplied in the job definition. CANCEL, START and TRACK use them to log on to SAP Data Services: a security token is returned and used on all subsequent calls to the web service until the job has completed, then discarded.
+
+PING is the exception. It still requires the values to be present, but it does not log on — it calls the ping operation directly. So a PING job confirms that the connector can reach the web service and tells you nothing about whether the credentials are valid.
 
 ## FAQs
 
@@ -54,10 +56,10 @@ Each job type apart from PING requires a valid user and password, which the conn
 No. The connector does not create job definitions in the SAP Data Services database. It only references existing jobs in the Repository.
 
 **Where does the connector run?**
-The connector runs as a Windows batch program started by the Windows Agent. It can be installed on the OpCon server or on a separate Windows server with a Windows Agent installed.
+The connector runs as a Java program started by the Windows Agent, using the runtime supplied in the package. It can be installed on the OpCon server or on a separate Windows server with a Windows Agent installed.
 
 **What does the PING job type do?**
-A PING job type has no additional parameters and is used to test the communications link between the SAP Data Services Connector and the SAP Data Services environment.
+A PING job type has no additional parameters beyond the common fields and is used to test the communications link between the SAP Data Services Connector and the SAP Data Services environment. It does not authenticate, so a successful PING does not confirm that the credentials are correct.
 
 ## Glossary
 

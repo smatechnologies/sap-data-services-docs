@@ -12,13 +12,13 @@ tags:
 
 ## What is it?
 
-The SAP Data Services Connector is delivered as a zip file. To install it, you extract the contents to a new `SAPDataServices` directory under your OpCon installation path. The connector runs as a Windows batch program started by the Windows Agent, so it must be installed on a host where a Windows Agent is available.
+The SAP Data Services Connector is delivered as a zip file. To install it, you extract the contents to a new `SAPDataServices` directory under your OpCon installation path. The connector is a Java program that the Windows Agent starts, so it must be installed on a host where a Windows Agent is available.
 
 ## Before you start
 
 Make sure the following are in place before installing:
 
-- A Windows Agent is installed on the host that will run the connector. The connector runs as a Windows batch job and cannot run without an agent.
+- A Windows Agent is installed on the host that will run the connector. The agent starts the connector, so it cannot run without one.
 - You have the `SAPDSConnector-win.zip` distribution file.
 - You know the OpCon installation path on the target host. The default is `C:\Program Files\OpConxps`.
 
@@ -42,12 +42,18 @@ After extraction, the `SAPDataServices` directory contains:
 
 | Item | Purpose |
 |---|---|
-| Connector executable | The SAP Data Services Connector program. |
-| Encryption executable | Used to encrypt SAP Data Services credentials. |
+| `bods.exe` | The SAP Data Services Connector program. |
+| `Encrypt.exe` | Utility that encodes a value for use in a configuration file. It is not used for SAP Data Services credentials — see the note below. |
 | `Connector.config` | Connector configuration file. |
 | `JAVA` directory | Embedded OpenJDK 1.8. No separate Java install is required. |
 | `WSDL` directory | The `BODS_WSDL.wsdl` and supporting XML used by the connector. |
 | `emplugins` directory | The Enterprise Manager job subtype JAR. |
+
+:::note
+
+SAP Data Services credentials are not stored in `Connector.config`. They are entered in each job definition and supplied to the connector by the Windows Agent using encrypted global properties. See [Defining SAP Data Services jobs in Enterprise Manager](../reference_information/em-defining-a-job.md) or [Defining SAP Data Services jobs in Solution Manager](../reference_information/sm-defining-a-job.md).
+
+:::
 
 ## Next steps
 
@@ -65,7 +71,7 @@ After the connector files are in place, complete the following:
 Extract them into a new `SAPDataServices` directory under the OpCon installation path (`OpConxps`) on the host that runs the Windows Agent.
 
 **Does the connector require a Windows Agent?**
-Yes. The connector runs as a Windows batch program, so a Windows Agent must be present on the host that runs the connector.
+Yes. The agent is what starts the connector, so a Windows Agent must be present on the host that runs it.
 
 **Can I install the connector on the SAP Data Services server itself?**
 Yes. The connector can be installed on a central OpCon server or on the SAP Data Services server, provided a Windows Agent is installed on that server.

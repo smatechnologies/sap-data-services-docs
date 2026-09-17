@@ -73,8 +73,8 @@ A Start task starts a job in the SAP Data Services environment.
 | **Job Server** | Conditional | Name of the server on which the job runs. Mutually exclusive with **Job Server Group**. Either **Job Server** or **Job Server Group** must be present. |
 | **Job Server Group** | Conditional | Name of a Job Server Group on which the job runs. Mutually exclusive with **Job Server**. Either **Job Server** or **Job Server Group** must be present. |
 | **Disable Audit** | No | When selected, submits a request to disable auditing for this run. |
-| **Initial Poll Delay** | Yes | Initial poll delay (seconds) when checking for the status of the job after it has been started. |
-| **Poll Delay** | Yes | Poll delay (seconds) between subsequent status checks. |
+| **Initial Poll Delay** | No | Seconds to wait before the first status check after the job is started. Defaults to 5 if left empty. |
+| **Poll Delay** | No | Seconds between subsequent status checks. Defaults to 5 if left empty. |
 
 #### Substitution Parameters
 
@@ -107,8 +107,8 @@ Use Track when you need to check the status of a job running in the SAP Data Ser
 | **Job Name** | Yes | Name of the job to track. The connector searches for the job ID that matches the job name of the latest job which is in a running state. |
 | **Job Status** | Yes | Status of the job. Select a value from the list. When tracking a job, the `running` status should be selected. |
 | **Repository** | Yes | Name of the repository within which the job is defined. |
-| **Initial Poll Delay** | Yes | Initial poll delay (seconds) when checking for the status. |
-| **Poll Delay** | Yes | Poll delay (seconds) between subsequent status checks. |
+| **Initial Poll Delay** | No | Seconds to wait before the first status check. Defaults to 5 if left empty. |
+| **Poll Delay** | No | Seconds between subsequent status checks. Defaults to 5 if left empty. |
 
 ## FAQs
 

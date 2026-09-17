@@ -18,8 +18,8 @@ The SAP Data Services job subtype lets users define SAP Data Services jobs in En
 
 To install the subtype, complete the following steps:
 
-1. In the `<media>\SAPDataServices\emplugins` directory, locate the JAR file called `com.sma.ui.core.jobdetails.sapds_1.0.0.202009230702.jar`.
-2. Copy the JAR file from the distribution directory `<media>:\SAPDataServices\emplugins` into the `<media>:\OpConxps\EnterpriseManager x64\dropins` folder.
+1. In the `emplugins` directory of the connector installation, locate the JAR file called `com.sma.ui.core.jobdetails.sapds_1.0.0.202009230702.jar`.
+2. Copy the JAR file into the `dropins` folder of the Enterprise Manager installation, for example `C:\Program Files\OpConxps\EnterpriseManager x64\dropins`.
 
 :::note
 These steps need to occur on every end user's machine that has access to Enterprise Manager to ensure their access to the subtype.
@@ -43,7 +43,7 @@ You may have to open Enterprise Manager as an Administrator the first time in or
 ## FAQs
 
 **Where do I copy the subtype JAR file?**
-Copy `com.sma.ui.core.jobdetails.sapds_1.0.0.202009230702.jar` into the `<media>:\OpConxps\EnterpriseManager x64\dropins` folder on each Enterprise Manager machine.
+Copy `com.sma.ui.core.jobdetails.sapds_1.0.0.202009230702.jar` into the `dropins` folder of the Enterprise Manager installation on each Enterprise Manager machine.
 
 **Do I need to install the subtype on every Enterprise Manager machine?**
 Yes. The JAR must be present on every end user's machine that uses Enterprise Manager to make the SAP Data Services subtype available.

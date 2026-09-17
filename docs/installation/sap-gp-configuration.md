@@ -16,7 +16,7 @@ The SAP Data Services Connector jobs use the path to the connector multiple time
 
 ## Global Property setup
 
-Create a Global Property that points to the SAPDS directory that was created during the extraction process.
+Create a Global Property that points to the `SAPDataServices` directory that was created during the extraction process.
 
 :::tip Example
 
@@ -24,7 +24,7 @@ For new implementations, create a new Global Property with the path to the SAP D
 
 **Name**: `SAPDSPath`
 
-**Value**: `C:\Program Files\OpConxps\SAPDS`
+**Value**: `C:\Program Files\OpConxps\SAPDataServices`
 
 ![GP_Example.png](../../static/img/GP_Example.png)
 :::
@@ -35,10 +35,10 @@ For new implementations, create a new Global Property with the path to the SAP D
 A Global Property lets you reference the connector path from many job definitions. If the path changes, you update it once in the Global Property instead of editing every job.
 
 **What value should the Global Property contain?**
-The full path to the SAPDS directory created during extraction, for example, `C:\Program Files\OpConxps\SAPDS`.
+The full path to the directory created during extraction, for example, `C:\Program Files\OpConxps\SAPDataServices`. If you extracted the package somewhere else, use that path instead — the value must match wherever the connector files actually are.
 
 ## Glossary
 
 **Global Property** — A named OpCon value that can be referenced by many job definitions and resolved at runtime.
 
-**SAPDS directory** — The directory created when the connector is extracted; it contains the connector executable, configuration, embedded Java, and WSDL files.
+**SAPDataServices directory** — The directory created when the connector is extracted; it contains the connector executable, configuration, embedded Java, and WSDL files.

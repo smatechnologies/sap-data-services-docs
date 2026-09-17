@@ -27,13 +27,17 @@ Make sure the following are in place before editing the file:
 To configure the connector, complete the following steps:
 
 1. Open `Connector.config` in the connector installation directory in a text editor.
-2. In the `[CONNECTOR]` section, leave `CONNECTOR_NAME` unchanged. This value should not be changed from its delivered setting.
+2. In the `[CONNECTOR]` section, leave `CONNECTOR_NAME` as delivered. The connector reads it at startup and it has no effect on behaviour, so there is nothing to gain by changing it.
 3. In the `[CONNECTOR]` section, set `DEBUG`:
 
     | Value | When to use |
     |---|---|
-    | `OFF` | Normal operation. This is the default. |
+    | `OFF` | Normal operation. |
     | `ON` | Only when requested to capture an error condition. |
+
+    :::caution
+    `DEBUG` has no default. The connector fails to load its configuration if the setting is missing, so set it to `OFF` rather than removing the line.
+    :::
 
 4. In the `[DATA SERVICES]` section, set `DATA_SERVICES_SERVER_ADDRESS` to the address of the web server hosting the SAP Data Services web service (for example, `http://VM-SAP-DS:8080`). This value overrides the web server address in the supplied WSDL.
 5. In the `[DATA SERVICES]` section, set `DATA_SERVICES_WEB_SERVICES_ENDPOINT`. Use the default value `/DataServices/servlet/webservices?ver=2.1` unless the endpoint was changed during the SAP Data Services installation.
@@ -63,8 +67,8 @@ DATA_SERVICES_WSDL_LOCATION=
 
 | Setting | Description | Default | Notes |
 |---|---|---|---|
-| `CONNECTOR_NAME` | The name of the connector. | (delivered value) | Do not change. |
-| `DEBUG` | Connector debug mode. | `OFF` | Set to `ON` only when requested to capture an error condition. |
+| `CONNECTOR_NAME` | A label for the connector. It is read at startup and has no effect on behaviour. | (delivered value) | Required — the connector fails to load its configuration if this setting is absent, so leave the line in place. |
+| `DEBUG` | Connector debug mode. Values are `ON` or `OFF`. | — | Required — the connector fails to load its configuration if this setting is absent, so set it to `OFF` rather than removing the line. Set it to `ON` only when requested to capture an error condition. |
 
 ### `[DATA SERVICES]` section
 
