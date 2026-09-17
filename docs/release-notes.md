@@ -10,31 +10,35 @@ tags:
 
 # SAP Data Services Connector release notes
 
-## 21
+## 24
 
 ### 24.3.0
 
-2026 May
+**Released:** 2026 May
 
-### What's new
+#### What's new
 
-:eight_spoked_asterisk: **CON-1330***: Removed vulnerability CVE-2022-41404 by replacing ini4j library with Apache-commons-configuration library.
+- **CON-1330**: Removed vulnerability CVE-2022-41404 by replacing the ini4j library with the Apache Commons Configuration library.
+
+## 21
 
 ### 21.00.0000
 
-2021 December
+**Released:** 2021 December
 
-### What's new
+#### What's new
 
-:eight_spoked_asterisk: **CONNUTIL-540**: CVE-2021-44228 adjustment removing log4j as the logging component.
+- **CONNUTIL-540**: CVE-2021-44228 adjustment removing log4j as the logging component.
 
-:eight_spoked_asterisk: **CONNUTIL-541**: Log file does not switch on defined values.
+- **CONNUTIL-541**: Log file does not switch on defined values.
 
-### Why this matters
+#### Why this matters
 
-Removing log4j as the logging component addresses the CVE-2021-44228 (Log4Shell) vulnerability. The fix to log file rotation ensures that log files now switch on the defined values, preventing log files from growing unbounded.
+Removing log4j as the logging component addresses the CVE-2021-44228 (Log4Shell) vulnerability. The fix to log file rotation means each log file now switches at its configured size limit instead of growing without bound.
 
-### Migration considerations
+Note that completed log files are retained indefinitely, so the `log` directory itself still grows until you remove old files. See [Logging and job output](./reference_information/logging-job-output.md).
+
+#### Migration considerations
 
 This release includes the new format installer where the files are extracted from the zip file into the desired directory. It contains an embedded Java version for the connector so there is no reliance on installed Java versions.
 

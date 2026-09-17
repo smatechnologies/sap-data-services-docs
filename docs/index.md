@@ -1,4 +1,10 @@
 ---
+title: SAP Data Services Connector
+description: "Start, cancel and track SAP Data Services jobs from OpCon: installation, configuration, job definition reference, and logging."
+tags:
+  - Conceptual
+  - System Administrator
+  - SAP Data Services Connector
 slug: "/"
 hide_table_of_contents: true
 ---

@@ -25,7 +25,7 @@ All interactions with the Solution Manager subtype must be completed in Solution
 Make sure the following are in place before installing:
 
 - You have the `ACSSAPDataServices.zip` file. It is available on the FTP site at **OpCon Releases\\Integrations\\SapDataServices**.
-- You know whether you are installing into an OpCon installation, a Relay installation, or both. The plugin path and service names differ.
+- You know whether you are installing into an OpCon installation, a Relay installation, or both. The plugin path is the same for each; the services to restart differ.
 - You have the contents of the `Connector.config` file you want the agent to use. See [SAP Data Services Connector configuration](../configuration.md) for the file format.
 
 ## Install the plugin

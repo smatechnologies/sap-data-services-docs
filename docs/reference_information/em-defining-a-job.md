@@ -37,7 +37,7 @@ Every CANCEL, PING, START, and TRACK job uses the following fields.
 
 | Field | Required | Description |
 |---|---|---|
-| **Connector Path** | Yes | Installed location of the SAP Data Services Connector. Should not be changed; the location should be defined in the **BODSPath** property. If more than one SAP Data Services Connector is installed on the same system, define a new Global Property and update this field to use it. |
+| **Connector Path** | Yes | Installed location of the SAP Data Services Connector. Should not be changed; the location should be defined in the **SAPDSPath** property. If more than one SAP Data Services Connector is installed on the same system, define a new Global Property and update this field to use it. |
 | **Function** | Yes | The function to run. Select **CANCEL**, **PING**, **START**, or **TRACK** from the list. The selected value determines which tabs are available. |
 | **User Name** | Yes | Name of a SAP Data Services user that has the required privileges to run the job. |
 | **User Password** | Yes | Password of the defined SAP Data Services user. Use the encrypted global token capability so the value is decrypted by the Windows Agent and passed to the connector. |
@@ -74,8 +74,19 @@ The START job type starts a job in the SAP Data Services environment. The **Star
 | **System Config** | No | A file that contains configuration information for a specific SAP Data Services installation. Mapped to the `job_system_profile` field. |
 | **Job Server** | Conditional | Name of a defined server on which the job runs. Mutually exclusive with **Job Server Group**. Either **Job Server** or **Job Server Group** must be present. |
 | **Job Server Group** | Conditional | Name of a defined Job Server Group on which the job runs. Mutually exclusive with **Job Server**. Either **Job Server** or **Job Server Group** must be present. |
-| **Initial Poll Delay** | Yes | Initial poll delay (seconds) when checking for the status of the job after it has been started. |
-| **Poll Delay** | Yes | Poll delay (seconds) between subsequent status checks. |
+| **Disable Audit** | No | When selected, submits a request to disable auditing for this run. |
+| **Initial Poll Delay** | No | Seconds to wait before the first status check after the job is started. Defaults to 5 if left empty. |
+| **Poll Delay** | No | Seconds between subsequent status checks. Defaults to 5 if left empty. |
+
+#### Substitution Parameters tab
+
+The **Substitution Parameters** tab passes substitution parameter values to the job being started. Substitution parameters are defined in SAP Data Services and take their values at run time.
+
+| Button | Purpose |
+|---|---|
+| **Add** | Adds a substitution parameter to the list. Enter a value in the name field and the value field, then select **Add**. |
+| **Update** | Updates a substitution parameter. Select it in the list, modify it, then select **Update**. |
+| **Remove** | Removes a substitution parameter from the list. Select it in the list, then select **Remove**. |
 
 #### Global Variables tab
 
@@ -104,19 +115,26 @@ Use TRACK when you need to check the status of a job running in the SAP Data Ser
 | **Job Name** | Yes | Name of the job to track. The connector searches for the job ID that matches the job name of the latest job which is in a running state. |
 | **Job Status** | Yes | Status of the job. Select a value from the list. When tracking a job, the `running` status should be selected. |
 | **Repository** | Yes | Name of the repository within which the job is defined. |
-| **Initial Poll Delay** | Yes | Initial poll delay (seconds) when checking for the status. |
-| **Poll Delay** | Yes | Poll delay (seconds) between subsequent status checks. |
+| **Initial Poll Delay** | No | Seconds to wait before the first status check. Defaults to 5 if left empty. |
+| **Poll Delay** | No | Seconds between subsequent status checks. Defaults to 5 if left empty. |
 
 ## Failure Criteria
 
-The CANCEL, PING, START, and TRACK job types all require a Failure Criteria definition. SAP Data Services scheduled tasks return the following codes:
+The CANCEL, PING, START, and TRACK job types all require a Failure Criteria definition. The connector returns the following codes:
 
 | Return code | Meaning |
 |---|---|
-| `0` | `FINISHED_OK` — the job completed processing. |
-| `1` | `ERRORED` — an exception occurred during job processing. A returned warning from SAP Data Services is logged and mapped to `ERRORED`. |
+| `0` | `FINISHED_OK` — the job completed successfully. |
+| `1` | `FINISHED_WITH_WARNING` — the job completed and SAP Data Services reported a warning. |
+| `2` | `ERRORED` — SAP Data Services reported an error for the job. |
 
-To check for a successful completion, set Failure Criteria to NE (Not Equal) to `0`.
+To fail the job on anything other than a clean completion, set Failure Criteria to NE (Not Equal) to `0`. That treats a warning as a failure. If warnings should not fail the job, define criteria that accept both `0` and `1`.
+
+:::caution
+
+Return code `1` is also used when the connector cannot start — for example when a required job definition field is empty, or on an unhandled error. In that case no request reaches SAP Data Services. Check the connector log to tell the two cases apart: a job that ran and warned is logged as finished with warning, and a connector that did not start is not.
+
+:::
 
 ![Failure Criteria](../../static/img/failure_crit.png)
 
@@ -132,7 +150,7 @@ A START job runs on either a single Job Server or a Job Server Group, not both. 
 No. The preceding `$` is added by SAP Data Services. Enter the variable name without it on the **Global Variables** tab.
 
 **What Failure Criteria should I use to detect a successful job?**
-Set Failure Criteria to NE (Not Equal) to `0`. Return code `0` indicates `FINISHED_OK`; return code `1` indicates `ERRORED`. SAP Data Services warnings are mapped to `ERRORED`.
+Set Failure Criteria to NE (Not Equal) to `0` if a warning should fail the job. Return code `0` is a clean completion, `1` is a completion with a SAP Data Services warning, and `2` is an error. If warnings should not fail the job, define criteria that accept both `0` and `1`.
 
 **How do I supply credentials securely?**
 Use the encrypted global token capability for **User Password**. The Windows Agent decrypts the value and passes it to the connector at runtime.
